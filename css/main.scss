@@ -3,10 +3,13 @@
 ---
 @charset "utf-8";
 
-
+//Web fonts
+@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,700); //Fira Sans
+@import url(https://fonts.googleapis.com/css?family=Gentium+Book+Basic:400,400italic,700,700italic);
 
 // Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$base-font-family: 'Gentium Book Basic', sans-serif;
+$title-font-family:'Fira Sans', sans-serif;
 $base-font-size:   16px;
 $base-font-weight: 400;
 $small-font-size:  $base-font-size * 0.875;
@@ -14,11 +17,12 @@ $base-line-height: 1.5;
 
 $spacing-unit:     30px;
 
-$text-color:       #111;
-$background-color: #fdfdfd;
+$text-color:       #211608;
+$link-color:       #822d24;
+$background-color: #c49b6c;
 $brand-color:      #2a7ae2;
 
-$grey-color:       #828282;
+$grey-color:       #822d24;
 $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 

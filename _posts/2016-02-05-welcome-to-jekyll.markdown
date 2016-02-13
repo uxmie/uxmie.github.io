@@ -18,6 +18,47 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
+{% highlight cpp linenos %}
+#define UNICODE
+#include <windows.h>
+
+using namespace std;
+
+class aclass{
+public:
+  aclass(int foo, char bar){foo = 0; bar = 1;}
+  ~aclass();
+  static int references;
+private:
+  const int privateFunc(int foo) const;
+}
+ 
+int main(int argc, char **argv) {
+  int speed = 0, speed1 = 0, speed2 = 0; // 1-20
+  printf("Set Mouse Speed by Maverick\n");
+ 
+  SystemParametersInfo(SPI_GETMOUSESPEED, 0, &speed, 0);
+  printf("Current speed: %2d\n", speed);
+ 
+  if (argc == 1) return 0;
+  if (argc >= 2) sscanf(argv[1], "%d", &speed1);
+  if (argc >= 3) sscanf(argv[2], "%d", &speed2);
+ 
+  if (argc == 2) // set speed to first value
+    speed = speed1;
+  else if (speed == speed1 || speed == speed2) // alternate
+    speed = speed1 + speed2 - speed;
+  else
+    speed = speed1;  // start with first value
+ 
+  SystemParametersInfo(SPI_SETMOUSESPEED, 0,  speed, 0);
+  SystemParametersInfo(SPI_GETMOUSESPEED, 0, &speed, 0);
+  printf("New speed:     %2d\n", speed);
+  return 0;
+}
+
+{% endhighlight %}
+
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
 Another Heading

@@ -3,8 +3,9 @@
  */
 .site-header {
     border-top: 5px solid $grey-color-dark;
-    border-bottom: 1px solid $grey-color-light;
+    border-bottom: 0px solid #111;
     min-height: 56px;
+    background-color: #a47644;
 
     // Positioning context for the mobile navigation icon
     position: relative;
@@ -99,6 +100,8 @@
  */
 .site-footer {
     border-top: 1px solid $grey-color-light;
+    float: bottom;
+    background-color: #a47644;
     padding: $spacing-unit 0;
 }
 
@@ -192,6 +195,7 @@
 .post-link {
     display: block;
     font-size: 24px;
+    color: #6c2119
 }
 
 
@@ -204,6 +208,8 @@
 }
 
 .post-title {
+    font-family: $title-font-family;
+    font-weight: bold;
     font-size: 42px;
     letter-spacing: -1px;
     line-height: 1;
@@ -215,6 +221,17 @@
 
 .post-content {
     margin-bottom: $spacing-unit;
+
+    p {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $title-font-family;
+        font-weight: bold;
+        padding-top: 20px;
+    }
 
     h2 {
         font-size: 32px;
@@ -238,5 +255,10 @@
         @include media-query($on-laptop) {
             font-size: 18px;
         }
+    }
+
+    a {
+        color: $link-color;
+        font-variant: small-caps;
     }
 }
