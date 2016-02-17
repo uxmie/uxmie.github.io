@@ -43,8 +43,13 @@ $text-color:    #261502;
 $link-color:    #7a241d;
 $head-color:    #fff;
 $head-bg-color: #39251c;
+$msg-bg-color:  #c2b39b;
 $heading-color: lighten($text-color, 2%);
+$par-padding:   2rem;
 
+@import url(https://fonts.googleapis.com/css?family=Gentium+Basic:400,700,400italic,700italic);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic);
 /*
  * Body resets
  *
@@ -71,7 +76,7 @@ html, body {
  */
 
 html {
-	font-family: "PT Serif", Georgia, "Times New Roman", serif;
+	font-family: "PT Serif", serif;
 	font-size:   16px;
 	line-height: 1.5;
 }
@@ -84,6 +89,8 @@ html {
 body {
 	color:                    $text-color;
 	background-color:         $bg-color;
+	background-image:         url({{ "/public/bg.png" }});
+	background-size:          128px auto;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust:     100%;
 }
@@ -111,16 +118,15 @@ a:hover, a:focus {
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-	font-family: "PT Sans", Helvetica, Arial, sans-serif;
+	font-family: "PT Sans", sans-serif;
 	margin-bottom: .5rem;
 	line-height: 1.25;
 	text-rendering: optimizeLegibility;
 	font-weight: bold;
 	color: $heading-color;
-	letter-spacing: -.025rem;
 }
 h1, h2, h3 {
-	text-shadow: 0px 0px 1px darken($bg-color, 10%);
+	text-shadow: 1px 1px 1px darken($bg-color, 10%);
 }
 h1 {
 	margin-top: 1.5rem;
@@ -163,8 +169,7 @@ hr {
 	position: relative;
 	margin: 1.5rem 0;
 	border: 0;
-	border-top:    1px solid #111;
-	border-bottom: 1px solid #000;
+	border-top:    1px solid darken($bg-color, 15%);
 }
 
 abbr {
@@ -174,48 +179,6 @@ abbr {
 }
 abbr[title] {
 	cursor: help;
-	border-bottom: 1px dotted #e5e5e5;
-}
-
-/* Code */
-code,
-pre {
-	font-family: Menlo, Monaco, "Courier New", monospace;
-}
-code {
-	padding: .25em .5em;
-	font-size: 85%;
-	color: #bf616a;
-	background-color: #f9f9f9;
-	border-radius: 3px;
-}
-pre {
-	display: block;
-	margin-top: 0;
-	margin-bottom: 1rem;
-	padding: 1rem;
-	font-size: .8rem;
-	line-height: 1.4;
-	white-space: pre;
-	white-space: pre-wrap;
-	word-break: break-all;
-	word-wrap: break-word;
-	background-color: #f9f9f9;
-}
-pre code {
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-	background-color: transparent;
-}
-
-/* Pygments via Jekyll */
-.highlight {
-	margin-bottom: 1rem;
-	border-radius: 4px;
-}
-.highlight pre {
-	margin-bottom: 0;
 }
 
 /* Gist via GitHub Pages */
@@ -243,9 +206,9 @@ pre code {
 /* Quotes */
 blockquote {
 	padding: .5rem 1rem;
-	margin: .8rem 0;
-	color: #7a7a7a;
-	border-left: .25rem solid #e5e5e5;
+	margin: .8rem $par-padding;
+	color: saturate(darken($link-color, 15%), 10%);
+	border-left: .25rem solid darken($link-color, 10%);
 }
 blockquote p:last-child {
 	margin-bottom: 0;
@@ -268,17 +231,16 @@ img {
 table {
 	margin-bottom: 1rem;
 	width: 100%;
-	border: 1px solid #e5e5e5;
+	//border: 1px solid #e5e5e5;
 	border-collapse: collapse;
 }
-td,
-th {
+td, th {
 	padding: .25rem .5rem;
-	border: 1px solid #e5e5e5;
+	border: 1px solid lighten($text-color, 10%);
 }
 tbody tr:nth-child(odd) td,
 tbody tr:nth-child(odd) th {
-	background-color: #f9f9f9;
+	background-color: darken($bg-color, 5%);
 }
 
 
@@ -304,8 +266,10 @@ tbody tr:nth-child(odd) th {
 .message {
 	margin-bottom: 1rem;
 	padding: 1rem;
-	color: #717171;
-	background-color: #f9f9f9;
+	color:            $text-color;
+	background-color: $msg-bg-color;
+	border-radius: 5px;
+	box-shadow: 1px 2px 3px darken($msg-bg-color, 40%);
 }
 
 

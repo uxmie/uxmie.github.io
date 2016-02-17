@@ -29,6 +29,7 @@
  */
 
 
+$sidebar-color: #510b06;
 
 
 /*
@@ -94,7 +95,7 @@
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
   font-size: .875rem; /* 15px */
   color: rgba(255,255,255,.6);
-  background-color: #202020;
+  background-color: $sidebar-color;
   -webkit-transition: all .3s ease-in-out;
           transition: all .3s ease-in-out;
 }
@@ -145,11 +146,15 @@ a.sidebar-nav-item:focus {
 
 /* Hide the sidebar checkbox that we toggle with `.sidebar-toggle` */
 .sidebar-checkbox {
-  position: absolute;
+/*  position: absolute;
   opacity: 0;
   -webkit-user-select: none;
      -moz-user-select: none;
-          user-select: none;
+          user-select: none;*/
+/* The settings above are buggy. Use this instead.
+ * (See https://github.com/poole/lanyon/issues/137)
+ */
+  display: none;
 }
 
 /* Style the `label` that we use to target the `.sidebar-checkbox` */
@@ -440,10 +445,10 @@ a.pagination-item:hover {
   box-shadow: 0 0 0 .25rem #fff;
 }
 .sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
-  box-shadow: .25rem 0 .5rem rgba(0,0,0,.1);
+  box-shadow: .25rem 0 .5rem rgba(0,0,0,.3);
 }
 
 /* Only one tweak for a reverse layout */
 .layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
-  box-shadow: -.25rem 0 .5rem rgba(0,0,0,.1);
+  box-shadow: -.25rem 0 .5rem rgba(0,0,0,.3);
 }
