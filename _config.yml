@@ -1,19 +1,24 @@
-# Welcome to Jekyll!
+# Permalinks
 #
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
 
-# Site settings
-title: 以後可能是個好網站
-#email: your-email@domain.com
-description: > # this means to ignore newlines until "baseurl:"
-   這裡還沒長出好東西，請耐心等候...
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
-#twitter_username: jekyllrb
-#github_username:  jekyll
+# Setup
+title:               以後可能是個好網站
+tagline:             'Some random tagline'
+description:         'A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a>
+ theme that places the utmost gravity on content with a hidden drawer. Made by
+ <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
+url:                 http://lanyon.getpoole.com
+baseurl:             ''
+paginate:            5
+gems:                [jekyll-paginate]
 
-# Build settings
-markdown: kramdown
+# About/contact
+author:
+  name:              Mark Otto
+  url:               https://twitter.com/mdo
+  email:             markdotto@gmail.com
+
+# Custom vars
+version:             1.0.0
