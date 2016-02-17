@@ -101,7 +101,14 @@ body {
  * Update various aspects of the text,
  * including body text, links, headings, etc.
  */
-
+::selection {
+	background-color: darken($bg-color, 30%);
+	color: #ebdfcd;
+}
+::-moz-selection {
+	background-color: darken($bg-color, 30%);
+	color: #ebdfcd;
+}
 /* Links */
 a {
 	color:           $link-color;
@@ -156,6 +163,7 @@ p {
 ul, ol, dl {
 	margin-top: 0;
 	margin-bottom: 1rem;
+	padding-left: $par-padding*2;
 }
 dt {
 	font-weight: bold;
@@ -361,7 +369,7 @@ tbody tr:nth-child(odd) th {
 .related {
 	padding-top: 2rem;
 	padding-bottom: 2rem;
-	border-top: 1px solid $text-color;
+	border-top: 1px solid darken($bg-color, 10%);
 }
 .related-posts {
 	padding-left: 0;
