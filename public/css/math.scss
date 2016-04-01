@@ -1,0 +1,25 @@
+---
+---
+{% include colors.scss %}
+.theorem {
+	margin-bottom: 1rem;
+	padding: 1rem;
+	background-color: $msg-bg-color;
+	border-radius: 5px;
+	box-shadow: 1px 2px 3px darken($msg-bg-color, 40%);
+}
+.theorem::before{
+	content: "定理";
+	font-weight: bold;
+	margin-right: 1.5rem;
+}
+.proof {
+	padding: .5rem 1rem;
+	margin-bottom: 1rem;
+	border-left: .25rem solid darken($link-color, 10%);
+}
+.proof::before{
+	content: "證明";
+	font-style: italic;
+	margin-right: 1.5rem;
+}

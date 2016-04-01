@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
   printf("Current speed: %2d\n", speed);
 
   if (argc == 1) return 0;
-  if (argc >= 2) sscanf(argv[1], "%d", &speed1);
+  if (argc >= 2) sscanf(argv[1], "%d very very very very very very very very very very very very very long line", &speed1);
   if (argc >= 3) sscanf(argv[2], "%d", &speed2);
 
   if (argc == 2) // set speed to first value
@@ -64,7 +64,6 @@ int main(int argc, char **argv) {
   printf("New speed:     %2d\n", speed);
   return 0;
 }
-
 {% endhighlight %}
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].

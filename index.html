@@ -4,13 +4,12 @@ title: 首頁
 ---
 <!-- <object data="{{ site.baseurl }}/public/title-plain.svg" type="image/svg+xml">Huh?</object> -->
 <div class="posts">
-  {% for post in site.posts %}
-    <h1 class="post-title">
-      <a href="{{ post.url | prepend: site.baseurl }}">
-        {{ post.title }}
-      </a>
-    </h1>
-
-    <span class="post-date">{{ post.date | date_to_string }}</span>
-  {% endfor %}
+	{% for post in site.posts %}
+		<h1 class="post-title"> {{ post.title }} </h1>
+		<span class="post-date">{{ post.date | date_to_string }}</span>
+		<p>
+			{{ post.excerpt | remove: '<p>' | remove: '</p>' }}
+			<a href="{{ post.url | prepend: site.baseurl }}">(繼續閱讀)</a>
+		</p>
+	{% endfor %}
 </div>

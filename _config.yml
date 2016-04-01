@@ -13,6 +13,7 @@ url:                 http://lanyon.getpoole.com
 baseurl:             ''
 paginate:            5
 gems:                [jekyll-paginate]
+#highlighter:         pygments
 
 # About/contact
 author:
