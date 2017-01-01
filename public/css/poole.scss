@@ -163,9 +163,9 @@ p {
 
 div.post {
 	background-color: $bg-text-color;
-	border-radius: 3px;
-	padding: 3rem;
-	box-shadow: 0px 6px 9px -2px rgba(0, 0, 0, 0.50);
+	border-radius: 2px;
+	padding: 2rem;
+	box-shadow: 0px 2px 5px -0px rgba(0, 0, 0, 0.50);
 }
 
 /* Lists */
@@ -353,14 +353,14 @@ tbody tr:nth-child(odd) th {
 
 .page,
 .post {
-	margin-bottom: 4em;
+	margin-bottom: 2em;
 }
 
 /* Blog post or page title */
 .page-title,
 .post-title,
 .post-title a {
-	color: $heading-color;
+	color: lighten($text-color, 10%);
 }
 .page-title,
 .post-title {
