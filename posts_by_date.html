@@ -1,0 +1,17 @@
+---
+layout: page
+title: Posts by date
+---
+<div class="posts">
+	<div class="post">
+		{% for post in site.posts %}
+			<a href="{{ post.url | prepend: site.baseurl }}"><h4>{{ post.title }}</h4></a>
+			<span class="post-date"><small>({{ post.date | date_to_string }})</small></span>
+			<!--<a href="{{ post.url | prepend: site.baseurl }}"><h2 class="post-title"> {{ post.title }} </h2></a>
+			<!--<p>
+				{{ post.excerpt | remove: '<p>' | remove: '</p>' }}
+				<a href="{{ post.url | prepend: site.baseurl }}">(…)</a>
+			</p>-->
+		{% endfor %}
+	</div>
+</div>

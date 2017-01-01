@@ -1,17 +1,9 @@
 ---
 layout: default
-title: 首頁
+title: Home
 ---
 <!-- <object data="{{ site.baseurl }}/public/title-plain.svg" type="image/svg+xml">Huh?</object> -->
 <div class="posts">
-	{% for post in site.posts %}
-		<div class="post">
-			<a href="{{ post.url | prepend: site.baseurl }}"><h1 class="post-title"> {{ post.title }} </h1></a>
-			<span class="post-date">{{ post.date | date_to_string }}</span>
-			<p>
-				{{ post.excerpt | remove: '<p>' | remove: '</p>' }}
-				<a href="{{ post.url | prepend: site.baseurl }}">(…)</a>
-			</p>
-		</div>
-	{% endfor %}
+	<h1>Hi!</h1>
+	<p>Nothing's really here yet.  Do you want to <a href="{{ site.baseurl }}posts_by_date/">browse posts by date?</a></p>
 </div>
