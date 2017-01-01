@@ -62,7 +62,7 @@ $sidebar-color: #0a2540;
 }
 @media (min-width: 56em) {
   .container {
-    max-width: 58rem;
+    max-width: 54rem;
   }
 }
 
@@ -84,16 +84,17 @@ $sidebar-color: #0a2540;
  */
 
 /* Style and "hide" the sidebar */
+$sidebar-width: 20rem;
 .sidebar {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: -14rem;
-  width: 14rem;
+  left: -$sidebar-width;
+  width: $sidebar-width;
   visibility: hidden;
   overflow-y: auto;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  font-size: .875rem; /* 15px */
+  font-size: 1rem; /* 15px */
   color: rgba(255,255,255,.6);
   background-color: $sidebar-color;
   -webkit-transition: all .3s ease-in-out;
@@ -101,7 +102,7 @@ $sidebar-color: #0a2540;
 }
 @media (min-width: 30em) {
   .sidebar {
-    font-size: .75rem; /* 14px */
+    font-size: 1rem; /* 14px */
   }
 }
 
@@ -242,9 +243,9 @@ a.sidebar-nav-item:focus {
 #sidebar-checkbox:checked ~ .sidebar,
 #sidebar-checkbox:checked ~ .wrap,
 #sidebar-checkbox:checked ~ .sidebar-toggle {
-  -webkit-transform: translateX(14rem);
-      -ms-transform: translateX(14rem);
-          transform: translateX(14rem);
+  -webkit-transform: translateX($sidebar-width);
+      -ms-transform: translateX($sidebar-width);
+          transform: translateX($sidebar-width);
 }
 
 
@@ -309,7 +310,7 @@ a.pagination-item:hover {
 
 .layout-reverse .sidebar {
   left: auto;
-  right: -14rem;
+  right: -$sidebar-width;
 }
 .layout-reverse .sidebar-toggle {
   left: auto;
@@ -319,9 +320,9 @@ a.pagination-item:hover {
 .layout-reverse #sidebar-checkbox:checked ~ .sidebar,
 .layout-reverse #sidebar-checkbox:checked ~ .wrap,
 .layout-reverse #sidebar-checkbox:checked ~ .sidebar-toggle {
-  -webkit-transform: translateX(-14rem);
-      -ms-transform: translateX(-14rem);
-          transform: translateX(-14rem);
+  -webkit-transform: translateX(-$sidebar-width);
+      -ms-transform: translateX(-$sidebar-width);
+          transform: translateX(-$sidebar-width);
 }
 
 
