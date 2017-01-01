@@ -68,13 +68,13 @@ int main(int argc, char **argv) {
 
 Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
-# Another Heading
+## Another Heading
 
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ornare arcu in diam ullamcorper, ac aliquam tellus dignissim. Fusce non volutpat turpis. Vestibulum iaculis mauris eget nisi mollis tempor eu sagittis est. Sed dapibus vitae lacus et auctor. Duis ultrices fringilla risus sed tincidunt. Proin bibendum tellus ac nibh commodo tempor. Aenean suscipit consectetur suscipit. Aenean mauris enim, venenatis sit amet ex eu, molestie auctor ipsum. Aliquam tincidunt non nisl fringilla ornare. Suspendisse lobortis quam tellus, non suscipit quam egestas et. Nullam aliquet purus a mollis feugiat. Quisque scelerisque aliquet urna, at accumsan arcu volutpat nec.
 
 Suspendisse rhoncus ac sapien sed mattis. Aliquam ac consectetur orci. Donec scelerisque pharetra tellus, vitae ultrices risus suscipit at. Morbi interdum felis non efficitur sagittis. Phasellus quis lobortis dui, a pretium mauris. Nulla congue vestibulum gravida. Duis cursus semper tellus, ut blandit dui tristique nec. Pellentesque sit amet fringilla nisl. Sed consectetur cursus lacus, ac aliquam urna porta eget. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam dolor erat, ornare a eros id, mattis suscipit erat.
 
-# 可以打中文
+## 可以打中文
 
 使用[亂數假文產生器][chinese-lipsum]。
 
@@ -84,7 +84,7 @@ Suspendisse rhoncus ac sapien sed mattis. Aliquam ac consectetur orci. Donec sce
 
 子已子學考兒形創聯一蘭？總整無度導代有級能可止相，所黑聲。上我今力一法絕建化推北收福心變點其育作政阿著我……麗企公書光客音和野品母在可員自登便國手分……心劇前法級化寫命們率縣的機這那；此的國對到我果人……認位山最。
 
-## 小標題
+### 小標題
 
 公時布設中、步服完國示無……解一官士座沒山配，質背草利個這演，老調。
 

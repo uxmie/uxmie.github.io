@@ -1,9 +1,10 @@
 
-$bg-color:      #9c8a6e;
-$text-color:    #261502;
-$link-color:    #7a241d;
+$bg-color:      #a59270;
+$bg-text-color: #d0c1a4;
+$text-color:    #310505;
 $head-color:    #fff;
-$head-bg-color: #39251c;
-$msg-bg-color:  #c2b39b;
-$heading-color: lighten($text-color, 2%);
+$head-bg-color: #6c0000;
+$link-color:    lighten($head-bg-color, 2%);
+$msg-bg-color:  saturate(lighten($bg-text-color, 3%), 0%);
+$heading-color: lighten($head-bg-color, 5%);
 $par-padding:   2rem;
