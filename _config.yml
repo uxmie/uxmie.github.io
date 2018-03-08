@@ -10,7 +10,7 @@ description:         "Hello, world.  It's uxmie.  I write stuff."
 url:                 http://uxmie.github.io/
 baseurl:             ''
 paginate:            5
-gems:                [jekyll-paginate]
+plugins:             [jekyll-paginate]
 #highlighter:         pygments
 
 # About/contact

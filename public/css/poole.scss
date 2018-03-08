@@ -71,7 +71,7 @@ html, body {
 html {
 	font-family: "PT Serif", sans-serif;
 	font-size:   16px;
-	line-height: 1.5;
+	line-height: 1.7;
 }
 @media (min-width: 38em) {
 	html {
@@ -158,8 +158,10 @@ h4, h5, h6 {
 /* Body text */
 .post p {
 	margin-top: 0;
-	margin-bottom: 0.75rem;
+	margin-bottom: 1.5rem;
 	padding-left: 2rem;
+  padding-right: 2rem;
+  text-align: justify;
 }
 
 div.post {
@@ -223,10 +225,12 @@ abbr[title] {
 
 /* Quotes */
 blockquote {
-	padding: .5rem 1rem;
-	margin: .8rem $par-padding;
-	color: saturate(darken($link-color, 15%), 10%);
-	border-left: .25rem solid darken($link-color, 10%);
+	padding: 1.5rem 1rem;
+	margin: 1.6rem $par-padding;
+  color: saturate(darken($link-color, 0%), 10%);
+  background-color: darken($bg-text-color, 5%);
+  border-left: .25rem solid darken($link-color, 0%);
+  font-style: italic;
 }
 blockquote p:last-child {
 	margin-bottom: 0;
