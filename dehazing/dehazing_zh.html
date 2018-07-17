@@ -11,43 +11,43 @@
     <div id="fileDisplayArea"></div>
     <canvas id="originalPic" class="original_pic"></canvas>
     <div id="airLightSection">
-      <h2>Air light estimation</h2>
+      <h2>天色計算</h2>
       <div>Gamma: 
         <input id="gammaSlide" type="range" min="0.5" max="3.0" step="0.1" value="1.5"></input>
         <span id="gammaVal"></span>
       </div>
-      <div>Minimum brightness:
+      <div>最小值:
         <input id="minAirSlide" type="range" min="0.0" max="1.0" step="0.02" value="0.4"></input>
         <span id="minAirVal"></span>
       </div>
-      <div id="airlightDiv">Maximum brightness:
+      <div id="airlightDiv">最大值:
         <input id="maxAirSlide" type="range" min="0.0" max="1.0" step="0.02" value="1.0"></input>
         <span id="maxAirVal"></span>
       </div>
-      <button id="airLightButton">Find air light</button>
-        Air light estimate:
+      <button id="airLightButton">計算</button>
+        結果:
         <span id="airLightPreview" style='width:3em; height:2em; display: inline-block;'></span>
     </div>
     <div id="transmittanceDiv">
-      <button id="transmittanceButton">Calculate Transmittance Map</button>
+      <button id="transmittanceButton">計算霧量</button>
       <div id="dehazeResultsDiv">
         <canvas id="dehazeResult"></canvas>
         <canvas id="transmittanceResultsPic"></canvas>
         <div>
-          <h2>Post processing</h2>
-          Distance:
+          <h2>後製</h2>
+          距離:
           <input id="distSlide" type="range" min="-1.0" max="1.0" step="0.01" value="0.0"></input>
           <span id="distVal"></span>
-          Haze amount: 
+          霧量: 
           <input id="hazeAmountSlide" type="range" min="0.0" max="3.0" step="0.01" value="0.3"></input>
           <span id="hazeAmountVal"></span>
           Gamma:
           <input id="gammaOutSlide" type="range" min="0.5" max="3.0" step="0.1" value="1.0"></input>
           <span id="gammaOutVal"></span>
-          <button id="originalButton">Calculate original size</button>
+          <button id="originalButton">原照片除霧</button>
         </div>
       </div>
     </div>
-    <a id="downloadLink">Download</a>
+    <a id="downloadLink">下載</a>
   </body>
 </html>
