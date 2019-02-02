@@ -1,0 +1,77 @@
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+		border-radius: 50%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5em;
+    width: 10em;
+    height: 10em;
+    animation: spin 1s linear infinite;
+}
+
+#statusUpdate {
+	margin-top: 3em;
+	margin-bottom: auto;
+}
+
+#airLightSection {
+	visibility: hidden;
+}
+#transmittanceDiv {
+	visibility: hidden;
+}
+
+#originalPic {
+	visibility: hidden;
+}
+
+canvas {
+	box-shadow: 2px 2px 8px;
+	margin: 10px;
+}
+
+#loadingBG {
+	position: fixed;
+	top: 0%;
+	left: 0%;
+	width:100%;
+	height:100%;
+	background-color: #000a;
+}
+#loadingScreen {
+	position:fixed;
+	top: 50%;
+	left: 50%;
+	width:50em;
+	height:26em;
+	margin-left: -25em; /*set to a negative number 1/2 of your width*/
+	margin-top: -13em; /*set to a negative number 1/2 of your height*/
+	background-color: #333333;
+	box-shadow: 4px 4px 20px
+}
+
+.loading {
+	visibility: hidden;
+}
+
+.container {
+	width: 80em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body {
+	text-align: center;
+	background-color: #888888;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+input[type=range] {
+  width: 80%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}

@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Image dehazing</title>
+    <meta charset="UTF-8">
+    <script src="main_browser_min.js"></script>
+    <style></style>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="loading" id="loadingBG">
+      <div class="loading" id="loadingScreen">
+        <div class="loader"></div>
+        <p id="statusUpdate">Start dehazing…</p>
+      </div>
+    </div>
+    <div class="container">
+      <h1>照片去霧器</h1>
+      <input type="file" id="fileInput"/>
+      <div id="fileDisplayArea"></div>
+      <canvas id="originalPic" class="original_pic"></canvas>
+      <div id="airLightSection">
+        <h2>Air light estimation</h2>
+        <div>Gamma: 
+          <input id="gammaSlide" type="range" min="0.5" max="3.0" step="0.1" value="1.5"></input>
+          <span id="gammaVal"></span>
+        </div>
+        <div>Minimum brightness:
+          <input id="minAirSlide" type="range" min="0.0" max="1.0" step="0.02" value="0.2"></input>
+          <span id="minAirVal"></span>
+        </div>
+        <div id="airlightDiv">Maximum brightness:
+          <input id="maxAirSlide" type="range" min="0.0" max="1.0" step="0.02" value="1.0"></input>
+          <span id="maxAirVal"></span>
+        </div>
+        <button id="dehazePreviewButton">Dehaze!</button>
+          Air light estimate:
+          <span id="airLightPreview" style='width:3em; height:2em; display: inline-block;'></span>
+      </div>
+      <div id="transmittanceDiv">
+        <!--<button id="transmittanceButton">Calculate Transmittance Map</button>-->
+        <div id="dehazeResultsDiv">
+          <canvas id="dehazeResult"></canvas>
+          <canvas id="transmittanceResultsPic"></canvas>
+          <div>
+            <h2>Post processing</h2>
+            <div>Distance:
+              <input id="distSlide" type="range" min="-1.0" max="1.0" step="0.01" value="0.0"></input>
+              <span id="distVal"></span>
+            </div>
+            <div>Haze amount: 
+              <input id="hazeAmountSlide" type="range" min="0.0" max="3.0" step="0.01" value="0.3"></input>
+              <span id="hazeAmountVal"></span>
+            </div>
+            <div>Gamma:
+              <input id="gammaOutSlide" type="range" min="0.5" max="3.0" step="0.1" value="1.0"></input>
+              <span id="gammaOutVal"></span>
+            </div>
+            <button id="originalButton">Calculate original size</button>
+          </div>
+        </div>
+        <a id="downloadLink">Download</a>
+      </div>
+    </div>
+  </body>
+</html>
