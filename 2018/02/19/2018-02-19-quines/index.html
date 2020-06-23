@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-tw,en,default">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- MathJax 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="問題敘述
+
+試寫一段程式碼，會輸出自己的程式碼。沒有任何輸入。
+
+這樣的程式稱為一個自產生程式（Quine）。Quine 一詞是美國科學家侯世達 (Douglas Hofstadter) 為記念邏輯學家奎因（Willard Van Orman Quine）所創。比起其他程式題目，譬如最短路徑、最大流"/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="UXMIE"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="自產生程式（上）：自產生程式是什麼？謊話、罰寫、C 語言"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="問題敘述
+
+試寫一段程式碼，會輸出自己的程式碼。沒有任何輸入。
+
+這樣的程式稱為一個自產生程式（Quine）。Quine 一詞是美國科學家侯世達 (Douglas Hofstadter) 為記念邏輯學家奎因（Willard Van Orman Quine）所創。比起其他程式題目，譬如最短路徑、最大流"/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="以後可能是個好站"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="http://uxmie.github.io/img/cover-bg.png"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="http://uxmie.github.io/img/cover-bg.png"/>
+    
+
+    <!-- Title -->
+    
+    <title>自產生程式（上）：自產生程式是什麼？謊話、罰寫、C 語言 | 以後可能是個好站</title>
+
+    <!-- Bootstrap Core CSS -->
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">以前可能是個好站</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/uxmie" target="_blank" rel="noopener">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/code-bg.png')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>自產生程式（上）：自產生程式是什麼？謊話、罰寫、C 語言</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-02-19
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+<a href="/categories/Math/">Math</a>/ <a href="/categories/Computing/">Computing</a>
+
+                    
+                </div>
+                
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 main-text">
+                <link rel="stylesheet" type="text&#x2F;css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"><h2 id="問題敘述">問題敘述</h2>
+<blockquote>
+<p>試寫一段程式碼，會輸出自己的程式碼。沒有任何輸入。</p>
+</blockquote>
+<p>這樣的程式稱為一個<strong>自產生程式（Quine）</strong>。Quine 一詞是美國科學家侯世達 (Douglas Hofstadter) 為記念邏輯學家奎因（Willard Van Orman Quine）所創。比起其他程式題目，譬如最短路徑、最大流、……這樣的問題敘述乍看之下或許有些含糊，就好像一個循環定義一般，不知從何著手。即便如此我們仍可以用最簡單的方法，試著找出解法。</p>
+<p>以 C 語言為例，要印出自己，首先當然要寫一些開頭的束西：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>……再印程式的開頭……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"#include &lt;stdio.h&gt;\nint main() &#123; "</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>……再印出<code>printf()</code>的內容……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"#include &lt;stdio.h&gt;\nint main() &#123; \n"</span></span><br><span class="line">         <span class="string">"printf(\"#include &lt;stdio.h&gt;\\nint main() &#123; \\n\n"</span></span><br><span class="line">         <span class="string">"         \"printf(\\\"#include &lt;stdio.h&gt;\\\\nint main() &#123; \\\\n\\n&#125;"</span></span><br><span class="line">         <span class="comment">//......</span></span><br><span class="line">         );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>……就這麼無限遞迴下去。很顯然，最直接的方法在這裡是不可行的，但至少我們知道問題的困難點何在。</p>
+<p>我們其實也已經知道這樣的問題有解。若逛一逛<a href="https://en.wikipedia.org/wiki/Quine_(computing)" target="_blank" rel="noopener">維基百科的相關頁面</a>，就能發現許多語言的實作方法。如何思考這樣的問題呢？讓我們一同來瞧瞧。</p>
+<h2 id="問題試想兩種作弊方法">問題試想：兩種「作弊」方法</h2>
+<p>第一個直覺的想法，程式碼如下：</p>
+<pre><code></code></pre>
+<p>什麼？這裡什麼都沒有啊？沒錯，因為什麼都沒有，所以它隨時都在執行，隨時都在輸出自己的程式碼，而且因為有總共○行，沒有任何方法比這個更簡潔啦。哇哈哈哈哈……</p>
+<p>……咳咳，但這種腦筋急轉彎式的解答當然不是我們想要的，以下也不會針對這個程式繼續探討。下一位。</p>
+<h3 id="作弊-quine">「作弊 Quine」</h3>
+<p>撇開上一個「做法」，另一個可行的想法如下：</p>
+<ol type="1">
+<li>從硬碟把程式碼讀進程式中。</li>
+<li>把讀進來的程式碼一行一行輸出。</li>
+</ol>
+<p>這個想法實作為 C 程式，並命名為 <code>quine_file.c</code> 即如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	FILE *f = fopen(<span class="string">"quine_file.c"</span>,<span class="string">"r"</span>);</span><br><span class="line">	<span class="keyword">if</span> (f != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="keyword">char</span> s[<span class="number">100</span>];</span><br><span class="line">		<span class="keyword">while</span>(fgets(s, <span class="keyword">sizeof</span>(s), f) != <span class="literal">NULL</span>) &#123;</span><br><span class="line">			<span class="built_in">fputs</span>(s, <span class="built_in">stdout</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		fclose(f);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>當然，這個方法有一些毛病：</p>
+<ul>
+<li>程式碼改名便跑不動（我們當然也可以把第四行的檔名一同改掉）</li>
+<li>我們也無法從其他資料夾執行</li>
+<li>用到額外的資料，有些不優雅</li>
+</ul>
+<p>這樣的自產生成式，稱為一個「作弊 Quine」(cheating Quine)，而唯一作弊的點就在於使用了程式以外的資料。但無疑的是，在正確的情況下，它已經能順利達到我們的目的。能不能從這個方法，慢慢改良、延伸到不用任何其他資料呢？為此，我們暫時放下程式語言，來想想看下面這個邏輯問題。</p>
+<h2 id="這句話請寫一次">「這句話請寫一次」</h2>
+<p>「印出自己的程式碼」一事，如果用白話的方式呈現，也許相當於這樣的一句話：</p>
+<blockquote>
+<p>這句話請寫一次。</p>
+</blockquote>
+<p>如果有人「這句話請寫一次」真的寫了一次，那麼它就會被寫了一次，留下「這句話請寫一次」。這樣語意上指到自己的語句結構稱為<strong>自指 (Self-referencing)</strong>，在邏輯上可以用來製造悖論，如：</p>
+<blockquote>
+<p>這句話是假話。</p>
+</blockquote>
+<p>即有名的<strong>說謊者悖論 (Liar's Paradox)</strong>。</p>
+<p>我們原本題目的困難點就在於沒有明顯的方法實現自指：電腦中有什麼樣的指令意思是「這個指令」？但使用作弊 Quine 的作法我們確實也做到了。利用的就是外部的資料。在這裡，我們仔細想一下，以上的程式執行時所發生的事情：</p>
+<ol type="1">
+<li>首先，整段<strong>程式碼</strong>被編譯為一個<em>程式</em>。</li>
+<li><em>程式</em> 執行，並存取、輸出一段<strong>程式碼</strong>。</li>
+</ol>
+<p>要寫出這樣的程式，顯然有兩個關鍵的元素：一是程式，二是程式碼。其中程式在記憶體中執行，程式碼則存在硬碟中。在我們的應用中，硬碟和記憶體的分別並不重要，可以想像是記憶體的延伸。因此，如果要把硬碟輸入部分從整個程式移除，理論上，我們需要想辦法把程式碼也放在記憶體中，並有辦法在程式執行時正確存取。然而以上都是硬體上面的討論。這究竟有沒有邏輯上更清晰，直覺的想法呢？</p>
+<p>考慮以下這段白話的「指令」：</p>
+<blockquote>
+<p>把下一句話寫兩次。把下一句話寫兩次。</p>
+</blockquote>
+<p>如果有人照著做了，「把下一句話寫兩次」便會被寫兩次。我們於是使用了文字，寫出了輸出自己的一段指令了！照中文文法，第二個「把下一句話寫兩次」應該要加上引號才行。我們可以改成這樣：</p>
+<blockquote>
+<p>把下一句話寫兩次，第二次加上引號。「把下一句話寫兩次，第二次加上引號。」</p>
+</blockquote>
+<p>如果分析一下這段文字指令，我們能把它和前一個「作弊 Quine」作個連結：</p>
+<ul>
+<li>第一句「把下一句話寫兩次，第二次加上引號。」是實際上執行的動作，就是作弊 Quine 中被編釋、執行的東西。</li>
+<li>第二句加了引號的「把下一句話寫兩次，第二次加上引號。」是執行動作的說明，即作弊 Quine 中，存在硬碟中的程式碼。</li>
+<li>第一句中的「下一句話」，則告訴我們「原始碼」的所在地。</li>
+</ul>
+<p>有了引號，我們也可以把「原始碼」放到第一個位置：</p>
+<blockquote>
+<p>「把上一句話寫兩次，第一次加上引號。」把上一句話寫兩次，第一次加上引號。</p>
+</blockquote>
+<p>有兩件事情值得注意。一來當然是語序調換了，仍達到我們的目的。二來，在上一句話中，我們移除了「這句話請寫一次」中的自指，改為更具體的「上一句話」。第一句話因為是引述的句子，可以寫下任何內容而不用擔心其語意。當我們第二次說「把上一句話寫兩次」時，「上一句話」已經有了明確的定義。而這樣的結構，同樣跟一個悖論有異曲同工之妙：</p>
+<blockquote>
+<p>「這樣一句話若寫兩次，且第一次加引號，就是句假話。」這樣一句話若寫兩次，且第一次加引號，就是句假話。</p>
+</blockquote>
+<p>這個說謊者悖論的延伸稱作<strong>奎因悖論 (Quine's Paradox)</strong>。奎因以此指出，即使一段話沒有任何自指，仍然可以編出無法判斷真假的悖論，也是自產生程式的英文名字 Quine 的由來。事實上，自產生程式和悖論有著密切的關係，這些關係留待後面探討。</p>
+<p>當然對於一個程式而言，「上一句話」這樣的指令還太含糊。但一步一步，我們能把原本的話改離自然語言，而更接近程式語言。在程式中，如果要指到其他的內容，使用的是變數。我們在白話中也可以引進變數的概念：</p>
+<blockquote>
+<p>S 代表 「把 S 寫兩次，第一次加上引號。」把 S 寫兩次，第一次加上引號。</p>
+</blockquote>
+<p>或者：</p>
+<blockquote>
+<p>S 代表 「寫下SS，第一個 S 前後加上引號」寫下SS，第一個 S 前後加上引號。</p>
+</blockquote>
+<p>寫到這裡，也許太多「S」讓人頭有點痛了。為了解釋清楚眾多的「S」，暫時回到程式語言的世界，考慮下面的程式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">char</span> S[] = <span class="string">"ST"</span>;</span><br><span class="line"><span class="built_in">puts</span>(S);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>第一個 S 是變數名稱，第二個 S，即「ST」的「S」是字母 S，第三個 S 則是代表已經被賦值的變數 S。同樣地，引號內的 S 都指字母 S，但到了引號外則代表變數 S。</p>
+<p>至此腦袋還清晰的讀者（相信我，我絕對不是這種讀者。這兩句話我來回編輯了好幾次……）就會發現，實際執行上面的口令，第一個會得到「「把 S 寫兩次，第一次加上引號。」把 S 寫兩次，第一次加上引號。」，第二個會得到「「寫下SS，第一個 S 前後加上引號」寫下SS，第一個 S 前後加上引號。」，兩個都少了最前面的「S 代表」。如果我們再引進一個變數 T，就能解決這個問題。</p>
+<blockquote>
+<p>S 代表「S 代表T把 S 寫一次，把第一個 T 換成 S，並加上引號。」把 S 寫一次，把第一個 T 換成 S，並加上引號。</p>
+</blockquote>
+<p>思路有些跳躍，我們一步一步來看發生了什麼事：</p>
+<ol type="1">
+<li><p>把 S 寫一次，得到「S 代表T把 S 寫一次，把第一個 T 換成 S，並加上引號。」</p></li>
+<li><p>把第一個 T 換成 S，得到「S 代表S 代表 T 把 S 寫一次，把第一個 T 換成 S，並加上引號。把 S 寫一次，把第一個 T 換成 S，並加上引號。」</p></li>
+<li><p>把（第一步的）T 加上引號，得到「S 代表「S 代表T 把 S 寫一次，把第一個 T 換成 S，並加上引號。」把 S 寫一次，把第一個 T 換成 S，並加上引號。」</p></li>
+</ol>
+<p>在我們的口頭指令中，引號內並不符合文法，但在引號內都是引述的句子，可以打破中文的規則。我們再做最後一個變形：對於機器來說，「並加上引號」意思還太模糊：是加在前面？後面？加幾個？我們必須改成其他的說法。一個直覺的辦法是：</p>
+<blockquote>
+<p>S 代表「S 代表「T」把 S 寫一次，把第一個 T 換成 S。」把 S 寫一次，把第一個 T 換成 S。</p>
+</blockquote>
+<p>這樣一來有個邏輯上的漏洞： 之前說引號內不帶任何語意，字母 T 就是字母 T，不是變數名稱，所以「第一個 T」指的其實是第一句中「把第一個 T 換成 S」的 T。如此一來，我們的口頭指令會變成輸出「S 代表「T」把 S 寫一次，把第一個 S 代表「T」把 S 寫一次，把第一個 T 換成 S。 換成 S。」，指令失敗。但是使用「並加上引號」並沒有這樣的問題。我們於是可以改成：</p>
+<blockquote>
+<p>S 代表「S 代表T把 S 寫一次，把第一個 T 換成 [左引號]S[右引號]。」把 S 寫一次，把第一個 T 換成 [左引號]S[右引號]。</p>
+</blockquote>
+<p>這就是我們可以寫成程式的句型了。而我們仍可以注意到，這段指令前後若加上一些不影響輸出的句子，仍然可以達到我們的目的：</p>
+<blockquote>
+<p>你好！S 代表「你好！S 代表T把 S 寫一次，把第一個 T 換成 [左引號]S[右引號]。再見！」把 S 寫一次，把第一個 T 換成 [左引號]S[右引號]。再見！</p>
+</blockquote>
+<h2 id="實作">實作</h2>
+<p>講了許多的邏輯、變數、悖論，我們終於可以走出最後一大步，就是把上面的指令，用 C 實作，寫成下面這段程式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *s = <span class="string">"char *s = %c%s%c; int main() &#123; printf(s,34,s,34); return 0; &#125;"</span>; <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(s,<span class="number">34</span>,s,<span class="number">34</span>); <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>要知道的只有 34 是 ASCII 中的引號「"」，左右是一樣的。如此一來，我們就能類比整個程式和之前所談的口語指令了（在此忽略空白）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *s =  <span class="string">"   char *s = %c%s%c; int main() &#123; printf(s, 34,s,34);"</span></span><br><span class="line"><span class="comment">/*-------- --  --------- ------- ---------------------  ----------------------------</span></span><br><span class="line"><span class="comment">  S 代表   「   S 代表     T       把 T 寫一次             把第一個 T 換成[引號]S[引號]</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="string">"return 0; &#125; "</span>; <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123; <span class="built_in">printf</span>(s, <span class="number">34</span>,s,<span class="number">34</span>);                    <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line"><span class="comment">/*---------- -- ---------------------- ---------------------------- -----------</span></span><br><span class="line"><span class="comment">  再見！      」 把 T 寫一次              把第一個 T 換成[引號]S[引號]    再見！</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>其實還有一些偷工減料的空間。如果硬擠出字串長度，還有以下這種非常簡潔的寫法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>*s=<span class="string">"char*s=%c%s%c;main()&#123;printf(s,34,s,34);&#125;"</span>;main()&#123;<span class="built_in">printf</span>(s,<span class="number">34</span>,s,<span class="number">34</span>);&#125;</span><br></pre></td></tr></table></figure>
+<p>當然，一個正常的程式人，一定希望這個程式是能看的。至少不要擠在同一行，不要使用全域變數，加一下 <code>#include &lt;stdio.h&gt;</code> 。最大的困難在於換行，字串裡面表示成 <code>\n</code> 。但我們也可以使用和引號同樣的技巧輸出：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123; </span><br><span class="line">	<span class="keyword">char</span> *s = <span class="string">"#include &lt;stdio.h&gt;%cint main() &#123; %c%cchar *s = %c%s%c;%c%cprintf(s,10,10,9,34,s,34,10,9,10,9,10);%c%creturn 0;%c&#125;"</span>;</span><br><span class="line">	<span class="built_in">printf</span>(s,<span class="number">10</span>,<span class="number">10</span>,<span class="number">9</span>,<span class="number">34</span>,s,<span class="number">34</span>,<span class="number">10</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">9</span>,<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中在 ASCII 裡，10 是換行，9 是 tab 鍵。如此一來，我們便從最開始的邏輯問題，一步步實現為程式碼了。</p>
+<h2 id="同場加映銜尾蛇程式">同場加映：銜尾蛇程式</h2>
+<p>使用相似的概念，我們也可以寫出一個「銜尾蛇程式」（Ouroboros）：程式 A 輸出一段程式 B，程式 B 又會輸出程式 A。若以 C、Python 3 兩個語言為例，便可寫出如下的程式。在 unix 環境下，若程式碼 <code>ouroboros.c</code> 編譯為執行檔 <code>ouroboros</code>，可以用 <code>./ouroboros | python3 | diff ouroboros.c -</code> 比對結果是否一樣。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *a = <span class="string">"a = %c%s%c;%cb = %c%s%c;%cprint(a.format(b,a,chr(123),chr(125),chr(34),chr(10),chr(9)))"</span>,</span><br><span class="line">	*b = <span class="string">"#include &lt;stdio.h&gt;&#123;5&#125;int main() &#123;2&#125;&#123;5&#125;&#123;6&#125;char *a = &#123;4&#125;&#123;0&#125;&#123;4&#125;,&#123;5&#125;&#123;6&#125;*b = &#123;4&#125;&#123;1&#125;&#123;4&#125;;&#123;5&#125;&#123;6&#125;printf(a,34,b,34,10,34,a,34,10);&#123;5&#125;&#123;3&#125;"</span>;</span><br><span class="line">	<span class="built_in">printf</span>(a,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">10</span>,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而<code>ouroboros.c</code>的輸出則為： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">"#include &lt;stdio.h&gt;&#123;5&#125;int main() &#123;2&#125;&#123;5&#125;&#123;6&#125;char *a = &#123;4&#125;&#123;0&#125;&#123;4&#125;,&#123;5&#125;&#123;6&#125;*b = &#123;4&#125;&#123;1&#125;&#123;4&#125;;&#123;5&#125;&#123;6&#125;printf(a,34,b,34,10,34,a,34,10);&#123;5&#125;&#123;3&#125;"</span>;</span><br><span class="line">b = <span class="string">"a = %c%s%c;%cb = %c%s%c;%cprint(a.format(b,a,chr(123),chr(125),chr(34),chr(10),chr(9)))"</span>;</span><br><span class="line">print(a.format(b,a,chr(<span class="number">123</span>),chr(<span class="number">125</span>),chr(<span class="number">34</span>),chr(<span class="number">10</span>),chr(<span class="number">9</span>)))</span><br></pre></td></tr></table></figure></p>
+<p>至於詳細原理，以及之前提到 Quine 在邏輯上的應用，留待<a href="!--￼11--">下篇</a>分解。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/uxmie" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 UXMIE<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

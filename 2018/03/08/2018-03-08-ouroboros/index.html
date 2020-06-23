@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-tw,en,default">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- MathJax 3 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="前言
+（本文是一系列文章的第二篇。若對本文有不了解，可以參考上篇 Quine 的基本介紹。）
+在寫作這兩篇文章時，初衷是這樣的：關於 Quine 的網路文章，大多分成兩種形式。一種以 Quine 大觀園的方式展覽各種程式語言下的 Quine，另一種會提供段程式碼，再逐行分析其指令。我想以更數理的方式"/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="UXMIE"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="自產生程式（中）：不動點、銜尾蛇、後門"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="前言
+（本文是一系列文章的第二篇。若對本文有不了解，可以參考上篇 Quine 的基本介紹。）
+在寫作這兩篇文章時，初衷是這樣的：關於 Quine 的網路文章，大多分成兩種形式。一種以 Quine 大觀園的方式展覽各種程式語言下的 Quine，另一種會提供段程式碼，再逐行分析其指令。我想以更數理的方式"/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="以後可能是個好站"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="http://uxmie.github.io/img/cover-bg.png"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="http://uxmie.github.io/img/cover-bg.png"/>
+    
+
+    <!-- Title -->
+    
+    <title>自產生程式（中）：不動點、銜尾蛇、後門 | 以後可能是個好站</title>
+
+    <!-- Bootstrap Core CSS -->
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">以前可能是個好站</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/uxmie" target="_blank" rel="noopener">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/code-bg.png')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>自產生程式（中）：不動點、銜尾蛇、後門</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-03-08
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+<a href="/categories/Math/">Math</a>/ <a href="/categories/Computing/">Computing</a>
+
+                    
+                </div>
+                
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 main-text">
+                <link rel="stylesheet" type="text&#x2F;css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"><h2 id="前言">前言</h2>
+<p><em>（本文是一系列文章的第二篇。若對本文有不了解，可以參考<a href="!--￼18--">上篇</a> Quine 的基本介紹。）</em></p>
+<p>在寫作這兩篇文章時，初衷是這樣的：關於 Quine 的網路文章，大多分成兩種形式。一種以 Quine 大觀園的方式展覽各種程式語言下的 Quine，另一種會提供段程式碼，再逐行分析其指令。我想以更數理的方式，寫作 Quine 背後的邏輯。 於是閉門造車了一會兒，匆匆寫作了第一篇文章。而就在寫作第二篇文章時，查到了 <a href="http://www.madore.org/~david/computers/quine.html" target="_blank" rel="noopener">David Madore 教授的相關文章</a>。</p>
+<p>當然，David Madore 教授專攻數學、密碼學，對於 Quine 這一話題的理解深入許多。而接下來的內容，也希望以他未觸及的話題為主。但在這之前，我們先擷取他的文章中的精要。</p>
+<p>若兩個程式在同樣的輸入下有同樣的輸出（忽略執行時間），我們定義這兩個程式<strong>等價</strong>。在數理邏輯中，我們有<strong>不動點定理 （Fixed-point theorem）</strong>：</p>
+<div class="theorem">
+<p>令 <span class="math inline">\(h\)</span> 為一個輸入參數為一個程式的程式，則存在一個程式 <span class="math inline">\(n\)</span> ，使得 <span class="math inline">\(h(n)\)</span> 和 <span class="math inline">\(n\)</span> 等價。</p>
+</div>
+<p>有了不動點定理，Quine 的存在，在數學上便有了解釋。我們能寫出這樣的程式：輸入一個程式 <span class="math inline">\(c\)</span> ，則 <span class="math inline">\(h(c)\)</span> 會輸出 <span class="math inline">\(c\)</span> 的程式碼。由不動點定理，存在一個程式 <span class="math inline">\(q\)</span>，使得 <span class="math inline">\(h(q)\)</span> 和 <span class="math inline">\(q\)</span> 等價。意即：<span class="math inline">\(q\)</span> 會輸出 <span class="math inline">\(q\)</span> 的程式碼。</p>
+<p>我們也能發現 Quine 為不動點定理中的一個特例——既然 <span class="math inline">\(h\)</span> 可以是任意程式，透過它我們也可以得到以下的結論：</p>
+<ul>
+<li><p>若 <span class="math inline">\(h(x)\)</span> 會輸出 <span class="math inline">\(x\)</span> 的 <a href="https://zh.wikipedia.org/wiki/SHA-2" target="_blank" rel="noopener">sha256 雜湊值</a>，則存在程式會輸出自己的 sha256 雜湊值。</p></li>
+<li><p>若 <span class="math inline">\(h(x)\)</span> 會解壓縮 <span class="math inline">\(x\)</span>，則存在一個壓縮檔，解壓縮完是自己。（稱為一個 zip Quine，<a href="https://alf.nu/ZipQuine" target="_blank" rel="noopener">已有人實作</a>）</p></li>
+<li><p>有三個輸出、輸入為程式的程式 <span class="math inline">\(h_1\)</span>、<span class="math inline">\(h_2\)</span>、<span class="math inline">\(h_3\)</span>，則存在一個程式 <span class="math inline">\(x\)</span>，使得 <span class="math inline">\(h_1(h_2(h_3(x)))\)</span> 和 <span class="math inline">\(x\)</span> 等價。如果三個程式分別為不同的程式語言寫成，則稱為一個<strong>銜尾蛇程式 (ouroboros)</strong>。</p></li>
+</ul>
+<p>第三種程式當然有不限定只用三種程式語言。有人在 Github 發表<a href="https://github.com/mame/Quine-relay" target="_blank" rel="noopener">使用 128 種語言的 ouroboros</a>。而這樣的程式究竟如何撰寫？Madore 教授如此寫道：</p>
+<blockquote>
+<p>This is too easy to do (we have proved the existence of such using the fixed-point theorem)</p>
+</blockquote>
+<p>讀著讀著，就這麼被 trivial 了。哎呀呀呀呀……我們的第一個任務就這麼現身了。</p>
+<h2 id="ouroboros-怎麼寫">Ouroboros 怎麼寫？</h2>
+<p>Ouroboros 希望達到的目的如下：</p>
+<blockquote>
+<p>試寫一個程式 A，會輸出一段程式 B，B 輸出程式 C …… 直到輸出原本的程式 A。其中所有的輸出皆為不同的程式語言。</p>
+</blockquote>
+<p>由於使用了兩個不同的語言，我們先試試一個比較簡單的問題：</p>
+<blockquote>
+<p>試寫一段程式 A，會輸出程式 B，B 輸出程式 A。A、B 使用同一個程式語言，但 A、B 為不同的程式。</p>
+</blockquote>
+<p>這樣的程式也許更容易使用原本的 Quine 程式延伸而成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *s=<span class="string">"char*s=%c%s%c;main()&#123;printf(s,34,s,34);&#125;"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(s,<span class="number">34</span>,s,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">實際上會輸出：char*s="char*s=%c%s%c;main()&#123;printf(s,34,s,34);&#125;";main()&#123;printf(s,34,s,34);&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>為了下文的可讀性，所有程式皆不考慮空格、換行的問題。</p>
+<p>在探討 Quine 時，我們曾經說 Quine 可以增加一些內容。如接下來的程式，一樣是一段 Quine：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *s=<span class="string">"char*s=%c%s%c,*a=%c%s%c,*b=%c%s%c;main()&#123;printf(s,34,s,34,34,a,34,34,b,34);&#125;"</span>,</span><br><span class="line">     *a=<span class="string">"hello"</span>,</span><br><span class="line">     *b=<span class="string">"world"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(s,<span class="number">34</span>,s,<span class="number">34</span>,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">34</span>,b,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此時若要解決上面的問題，只要把 a、b 的輸出順序調換就可以了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *s=<span class="string">"char*s=%c%s%c,*a=%c%s%c,*b=%c%s%c;main()&#123;printf(s,34,s,34,34,b,34,34,a,34);&#125;"</span>,</span><br><span class="line">     *a=<span class="string">"hello"</span>,</span><br><span class="line">     *b=<span class="string">"world"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(s,<span class="number">34</span>,s,<span class="number">34</span>,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">34</span>,a,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">輸出：</span></span><br><span class="line"><span class="comment">char *s="char*s=%c%s%c,*a=%c%s%c,*b=%c%s%c;main()&#123;printf(s,34,s,34,34,b,34,34,a,34);&#125;",</span></span><br><span class="line"><span class="comment">     *a="world",  &lt;----- 注意這兩行！！</span></span><br><span class="line"><span class="comment">     *b="hello";  &lt;----- &gt;</span></span><br><span class="line"><span class="comment">main()&#123;</span></span><br><span class="line"><span class="comment">    printf(s,34,s,34,34,b,34,34,a,34);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>我們再次執行輸出的程式碼時，a 和 b 又會交換一次，回到原來的程式。這樣一來，我們就能達到原來的目的了！然而，在跨越語言之前還有最後一步需要處理。的確生成了兩個不一樣的程式，但是兩個程式使用了同一段輸出指令，這樣無法跨越不同語譂。如果要克服這個困難，我們首先可以把 s 字串直接包括在 a 字串中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *a=<span class="string">"char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;"</span>,</span><br><span class="line">     *b=<span class="string">"world"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(a,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">34</span>,a,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">輸出：</span></span><br><span class="line"><span class="comment">char *a="world",</span></span><br><span class="line"><span class="comment">     *b="char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;";</span></span><br><span class="line"><span class="comment">main()&#123;</span></span><br><span class="line"><span class="comment">    printf(a,34,b,34,34,a,34);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>如此一來輸出的程式無法再執行，但如果我們再改一下 b 字串的內容：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *a=<span class="string">"char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;"</span>,</span><br><span class="line">     *b=<span class="string">"char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(a,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">34</span>,a,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">輸出：</span></span><br><span class="line"><span class="comment">char *a="char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;",</span></span><br><span class="line"><span class="comment">     *b="char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;";</span></span><br><span class="line"><span class="comment">main()&#123;</span></span><br><span class="line"><span class="comment">    printf(a,34,b,34,34,a,34);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>我們又回到了原先的狀況：一段程式碼輸出自己。但眼尖的讀者可能已經發現一件事，就是我們現在有了兩份輸出的指令。由於我們在 <code>printf()</code> 中交換了 a 和 b 的內容，雖然輸出了同一些文字，但邏輯上，a 和 b 已經互相交換。把 a 、b的內容改為邏輯相通，內容不同的兩段程式碼，可能更好比較兩者的差異：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *a=<span class="string">"char*b=%c%s%c,*a=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;"</span>,</span><br><span class="line">     *b=<span class="string">"char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,a,34,34,b,34);&#125;"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(a,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">34</span>,b,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">輸出：</span></span><br><span class="line"><span class="comment">char *b="char*b=%c%s%c,*a=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;",</span></span><br><span class="line"><span class="comment">     *a="char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,a,34,34,b,34);&#125;";</span></span><br><span class="line"><span class="comment">main()&#123;</span></span><br><span class="line"><span class="comment">    printf(a,34,b,34,34,a,34);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>若再把輸出的程式執行一次，則會輸出：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *a=<span class="string">"char*b=%c%s%c,*a=%c%s%c;main()&#123;printf(a,34,b,34,34,a,34);&#125;"</span>,</span><br><span class="line">     *b=<span class="string">"char*a=%c%s%c,*b=%c%s%c;main()&#123;printf(a,34,a,34,34,b,34);&#125;"</span>;</span><br><span class="line">main()&#123;</span><br><span class="line">    <span class="built_in">printf</span>(a,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">34</span>,b,<span class="number">34</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那麼，改寫到現在，到底怎麼跨越到另一個語言呢？這時就不難看出：很簡單，只需要把 a 換成第二個語言即可。這就是上一篇中 ouroboros 的原理，可以比較一下同一個語言和不同語言的差別：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *a = <span class="string">"a = %c%s%c;%cb = %c%s%c;%cprint(a.format(b,a,chr(123),chr(125),chr(34),chr(10),chr(9)))"</span>,</span><br><span class="line">	*b = <span class="string">"#include &lt;stdio.h&gt;&#123;5&#125;int main() &#123;2&#125;&#123;5&#125;&#123;6&#125;char *a = &#123;4&#125;&#123;0&#125;&#123;4&#125;,&#123;5&#125;&#123;6&#125;*b = &#123;4&#125;&#123;1&#125;&#123;4&#125;;&#123;5&#125;&#123;6&#125;printf(a,34,b,34,10,34,a,34,10);&#123;5&#125;&#123;3&#125;"</span>;</span><br><span class="line">	<span class="built_in">printf</span>(a,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">10</span>,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，第二個語言的程式碼需要用第一個語言的跳脫字元，反之亦然。到此，使用三個語言以上的 ouroboros 原理也能輕推出：三個字串中的程式碼寫出三段Quine，但是每輸出一次，字串內容便輸換一次。以下一段三個語言的銜尾蛇，使用了 C 、Python、和 Bash。每一段都力求程式碼的可讀性。當然，這樣的代價就是得面對複雜的跳脫字元……</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123; </span><br><span class="line">  <span class="keyword">char</span> *a = <span class="string">"a = %c%s%c%cb = %c%s%c%cc = %c%s%c%cprint(a.format(chr(34),b,chr(10),c,a,chr(92),chr(39)))%c"</span>,</span><br><span class="line">       *b = <span class="string">"#!/bin/bash&#123;2&#125;N=$&#123;6&#125;&#123;5&#125;x0a&#123;6&#125;&#123;2&#125;Q=$&#123;6&#125;&#123;5&#125;x22&#123;6&#125;&#123;2&#125;B=&#123;6&#125;&#123;3&#125;&#123;6&#125;&#123;2&#125;C=&#123;6&#125;&#123;4&#125;&#123;6&#125;&#123;2&#125;A=&#123;0&#125;&#123;1&#125;&#123;0&#125;&#123;2&#125;printf &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$B&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$C&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125;&#123;2&#125;"</span>,</span><br><span class="line">       *c = <span class="string">"#include &lt;stdio.h&gt;%sint main() &#123; %s  char *a = %s%s%s,%s       *b = %s%s%s,%s       *c = %s%s%s;%s  printf(a,34,b,34,10,34,c,34,10,34,a,34,10);%s&#125;%s"</span>;</span><br><span class="line">  <span class="built_in">printf</span>(a,<span class="number">34</span>,b,<span class="number">34</span>,<span class="number">10</span>,<span class="number">34</span>,c,<span class="number">34</span>,<span class="number">10</span>,<span class="number">34</span>,a,<span class="number">34</span>,<span class="number">10</span>,<span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>由此輸出的 Python 碼：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="string">"#!/bin/bash&#123;2&#125;N=$&#123;6&#125;&#123;5&#125;x0a&#123;6&#125;&#123;2&#125;Q=$&#123;6&#125;&#123;5&#125;x22&#123;6&#125;&#123;2&#125;B=&#123;6&#125;&#123;3&#125;&#123;6&#125;&#123;2&#125;C=&#123;6&#125;&#123;4&#125;&#123;6&#125;&#123;2&#125;A=&#123;0&#125;&#123;1&#125;&#123;0&#125;&#123;2&#125;printf &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$B&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$C&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125;&#123;2&#125;"</span></span><br><span class="line">b = <span class="string">"#include &lt;stdio.h&gt;%sint main() &#123; %s  char *a = %s%s%s,%s       *b = %s%s%s,%s       *c = %s%s%s;%s  printf(a,34,b,34,10,34,c,34,10,34,a,34,10);%s&#125;%s"</span></span><br><span class="line">c = <span class="string">"a = %c%s%c%cb = %c%s%c%cc = %c%s%c%cprint(a.format(chr(34),b,chr(10),c,a,chr(92),chr(39)))%c"</span></span><br><span class="line">print(a.format(chr(<span class="number">34</span>),b,chr(<span class="number">10</span>),c,a,chr(<span class="number">92</span>),chr(<span class="number">39</span>)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>執行 Python 後得到的 Bash 腳本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">N=$<span class="string">'\x0a'</span></span><br><span class="line">Q=$<span class="string">'\x22'</span></span><br><span class="line">B=<span class="string">'a = %c%s%c%cb = %c%s%c%cc = %c%s%c%cprint(a.format(chr(34),b,chr(10),c,a,chr(92),chr(39)))%c'</span></span><br><span class="line">C=<span class="string">'#!/bin/bash&#123;2&#125;N=$&#123;6&#125;&#123;5&#125;x0a&#123;6&#125;&#123;2&#125;Q=$&#123;6&#125;&#123;5&#125;x22&#123;6&#125;&#123;2&#125;B=&#123;6&#125;&#123;3&#125;&#123;6&#125;&#123;2&#125;C=&#123;6&#125;&#123;4&#125;&#123;6&#125;&#123;2&#125;A=&#123;0&#125;&#123;1&#125;&#123;0&#125;&#123;2&#125;printf &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$B&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$C&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$A&#123;0&#125; &#123;0&#125;$Q&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125; &#123;0&#125;$N&#123;0&#125;&#123;2&#125;'</span></span><br><span class="line">A=<span class="string">"#include &lt;stdio.h&gt;%sint main() &#123; %s  char *a = %s%s%s,%s       *b = %s%s%s,%s       *c = %s%s%s;%s  printf(a,34,b,34,10,34,c,34,10,34,a,34,10);%s&#125;%s"</span></span><br><span class="line"><span class="built_in">printf</span> <span class="string">"<span class="variable">$A</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$B</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$C</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$A</span>"</span> <span class="string">"<span class="variable">$Q</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$N</span>"</span> <span class="string">"<span class="variable">$N</span>"</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>講到這裡，我們看到各種 Quine 的變形，也注意到在一個 Quine 中，可以任意加減各種指令。事實上，我們有下列的結論：</p>
+<blockquote>
+<p>對於任意程式，我們皆可以植入一個印出本身程式碼的副程式（subroutine）<span class="math inline">\(Quine()\)</span>。</p>
+</blockquote>
+<p>若要實作 <span class="math inline">\(Quine()\)</span>，最簡單的方法就是在該副程式中，從硬碟開啟自己的原始碼並印出，意即我們上一篇所探討的「作弊 Quine」。我們也提溜作弊 Quine 和非作弊 Quine （true Quine）的關係：兩者事實上為一體兩面的問題，存在作弊 Quine，便存在對應的真實 Quine 寫法。</p>
+<p>這樣有 Quine 函式的程式，在邏輯中有一些有趣的意涵。這裡我們來討論其中幾個。</p>
+<h2 id="條件-quine-與隱形後門">條件 Quine 與隱形後門</h2>
+<p>一個沒有輸入，只輸出自己程式碼的程式，當然沒有什麼實值用途（事實上，我們本來就很少使用沒有輸入的程式）。這裡來看看一種變形，姑且稱作「條件 Quine」。</p>
+<p>條件 Quine 的功能如下：輸入特定的參數時，會輸出自己的程式碼，但是輸入其他的參數則其他功能。有了個 <span class="math inline">\(Quine()\)</span> 函數，這種設計便很容易達到。</p>
+<p>現實生活中，到底有沒有這樣的應用程式？答案是有的，就是 C 編譯器。許多程式，包括編譯器本身，皆由 C 語言撰寫而成。從另一個角度看，若「程式碼」為二進位機器碼，「參數」為 C 程式碼，那麼當編譯器編譯自己的時候，就是接受了特定輸入，輸出自己的程式碼了（時至今日，GCC、Clang、與 Visual C++ 都使用 C++。但這不影響我們接下來的結論）。這個特性顯然和編譯器的實作方式無關。</p>
+<p>1984 年，Unix 作者之一 Ken Thompson 在演講〈關於信任「信任」一事的沉思〉（<a href="https://dl.acm.org/citation.cfm?id=358210" target="_blank" rel="noopener"><em>Reflecting on Trusting Trust</em></a>） 使用了這個特性，假想出如下的情境：</p>
+<p>在登入時，作業系統都有專門的程序處理帳號和密碼。我們希望利用該程序的漏洞，在沒有正確帳密的狀況下登入並攻擊電腦。想當然，寫得好的登入程式並不會平白出現這種漏洞。如果可以改動登入程式的程式碼，我們能故意植入後門（例如使用者輸入特定名稱時直接登入），並透過系統更新散播有問題的程式給其他使用者。</p>
+<p>於是，我們把登入程式寫進這樣的後門：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(username=<span class="string">"backdoor"</span>) &#123;</span><br><span class="line">  <span class="comment">//執行後門</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">//正常處理登入</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把它提交給PM，希望它的其他開發者不會發現程式碼被調包。但顯然這個方法太明顯，一來沒什麼開發者會中計，二來一但被發現，只要及時把程式碼改回來，釋出更新就能處理完。一個把後門藏得更好的方法，不是改動登入程式本身，而是在編譯器中植入改變程式碼的後門，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="comment">/*正在編譯登入程式*/</span>) &#123;</span><br><span class="line">  <span class="comment">//在程式中植入後門</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">//正常編譯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這麼一來，有人發現登入程式有問題時，重新編譯也無法除去後門，因為問題出在編譯器本身，而不是程式寫錯。但這也只是把上述的問題推到編譯器。若及時補好編譯器的漏洞，我們的計畫還是泡湯。但如果我們採用以下的計畫呢？</p>
+<ul>
+<li><p>在編譯器中寫入下列的後門： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="comment">/*正在編譯C編譯器*/</span>) &#123;</span><br><span class="line">  <span class="comment">//植入這段 if … else if … else</span></span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="comment">/*正在編譯登入程式*/</span>) &#123;</span><br><span class="line">  <span class="comment">//植入後門</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">//正常編譯</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>把這個有問題的編譯器編譯出來，並把PM的編譯器調包。</p></li>
+<li><p>把上述的程式碼刪除，銷毀證據。</p></li>
+</ul>
+<p>使用這樣的編譯器究竟會發生什麼事？編譯登入程式時，顯然會被植入後門，即便改了程式碼無法解決。如果有人用這個有問題的編譯器編譯了一個編譯器，則編譯出的編譯器也會被植入這個漏洞，後門便散播了出去。我們也無法改變編譯器的程式碼，因為編譯時只會再次輸出成有問題的機器碼。漏洞於是永遠存在機器碼中，而除錯變得極其困難，而一切的關鍵就在於條件 Quine 的運用。</p>
+<h2 id="提外話印出自己的雜湊值">提外話：印出自己的雜湊值</h2>
+<p>我們在介紹不動點定理時，提到可以寫出一個程式，印出自己的 sha256 雜湊值（Madore 的原文寫的是 md5，但是 md5 這幾年顯得不太入流了……）。這也許不太直觀，畢竟這類雜湊演算法的目的就是希望無法輕易編造某個雜湊值的資料，但是有了 quine 的知識，這樣的程式並不難寫出。</p>
+<p>考慮以下用 bash 寫成的 quine： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">Q=$(<span class="built_in">printf</span> <span class="string">"\x27"</span>)</span><br><span class="line">T=<span class="string">'#!/bin/bash</span></span><br><span class="line"><span class="string">Q=$(printf "\x27")</span></span><br><span class="line"><span class="string">cat &lt;&lt;EOF</span></span><br><span class="line"><span class="string">$(echo "$T" | head -n2)</span></span><br><span class="line"><span class="string">$(echo "T=$Q$T$Q")</span></span><br><span class="line"><span class="string">$(echo "$T" | tail -n8)</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"><span class="string">'</span></span><br><span class="line">cat &lt;&lt;EOF</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | head -n2)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"T=<span class="variable">$Q</span><span class="variable">$T</span><span class="variable">$Q</span>"</span>)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | tail -n8)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<p>我們當然也可以把 Quine 的內容存在某個變數 S 中： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">Q=$(<span class="built_in">printf</span> <span class="string">"\x27"</span>)</span><br><span class="line">T=<span class="string">'#!/bin/bash</span></span><br><span class="line"><span class="string">Q=$(printf "\x27")</span></span><br><span class="line"><span class="string">S=$(cat &lt;&lt;EOF</span></span><br><span class="line"><span class="string">$(echo "$T" | head -n2)</span></span><br><span class="line"><span class="string">$(echo "T=$Q$T$Q")</span></span><br><span class="line"><span class="string">$(echo "$T" | tail -n8)</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"><span class="string">echo "$S"</span></span><br><span class="line"><span class="string">'</span></span><br><span class="line">S=$(cat &lt;&lt;EOF</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | head -n2)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"T=<span class="variable">$Q</span><span class="variable">$T</span><span class="variable">$Q</span>"</span>)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | tail -n8)</span><br><span class="line">EOF</span><br><span class="line">)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$S</span>"</span></span><br></pre></td></tr></table></figure></p>
+<p>此時，既然有了一個變數存了自己的程式碼，只要把該變數傳到 <code>sha256sum</code> 中，就會輸出自己的 sha256 值了。 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">Q=$(<span class="built_in">printf</span> <span class="string">"\x27"</span>)</span><br><span class="line">T=<span class="string">'#!/bin/bash</span></span><br><span class="line"><span class="string">Q=$(printf "\x27")</span></span><br><span class="line"><span class="string">S=$(cat &lt;&lt;EOF</span></span><br><span class="line"><span class="string">$(echo "$T" | head -n2)</span></span><br><span class="line"><span class="string">$(echo "T=$Q$T$Q")</span></span><br><span class="line"><span class="string">$(echo "$T" | tail -n8)</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"><span class="string">echo "$S" | sha256sum</span></span><br><span class="line"><span class="string">'</span></span><br><span class="line">S=$(cat &lt;&lt;EOF</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | head -n2)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"T=<span class="variable">$Q</span><span class="variable">$T</span><span class="variable">$Q</span>"</span>)</span><br><span class="line">$(<span class="built_in">echo</span> <span class="string">"<span class="variable">$T</span>"</span> | tail -n8)</span><br><span class="line">EOF</span><br><span class="line">)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$S</span>"</span> | sha256sum</span><br></pre></td></tr></table></figure></p>
+<p>而輸出為： <figure class="highlight plain"><figcaption><span>console</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ bash quine.sh</span><br><span class="line">e185fac77a1c21c842ac53e22116a6385282bff5bde011ba4ff6c005077cba16  -</span><br><span class="line">$ sha256sum quine.sh</span><br><span class="line">e185fac77a1c21c842ac53e22116a6385282bff5bde011ba4ff6c005077cba16  quine.sh</span><br></pre></td></tr></table></figure></p>
+<p>也許有人認為這幾行還有作弊的成份在裡面，因為 <code>sha256sum</code> 呼叫了外部程式，但消除這一段概念上還是可行的：把整段 <code>sha256sum</code> 的實作方法放進程式中與變數 S 中。這樣的程式怎麼寫？有什麼要注意的？這時，繼承 ouroboros 那一段的精神，不難看出，實作方法如下：</p>
+<blockquote>
+<p>The implementation and validation is trivial and left as an exercise.</p>
+</blockquote>
+<p><em>(待續)</em></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/uxmie" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 UXMIE<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
