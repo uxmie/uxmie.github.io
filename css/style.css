@@ -1,3 +1,25 @@
+/* use Charis SIL - Regular in .woff format */
+@font-face {
+  font-family: CharisSILW;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-R.woff");
+}
+/* use Charis SIL - Italic in .woff format */
+@font-face {
+  font-family: CharisSILW;
+  font-style: italic;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-I.woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-B.woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  font-style: italic;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-BI.woff");
+}
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -19,7 +41,7 @@
 .serif,
 body,
 .intro-header .post-heading .meta {
-  font-family: 'Charis SIL', 'Lora', 'Times New Roman', serif;
+  font-family: 'CharisSILW', 'Lora', 'Times New Roman', serif;
 }
 .sans-serif,
 h1,
