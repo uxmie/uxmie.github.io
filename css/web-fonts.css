@@ -1,0 +1,42 @@
+/* use Charis SIL - Regular in .woff format */
+@font-face {
+  font-family: CharisSILW;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-R.subset.woff");
+}
+/* use Charis SIL - Italic in .woff format */
+@font-face {
+  font-family: CharisSILW;
+  font-style: italic;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-I.subset.woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-B.subset.woff");
+}
+@font-face {
+  font-family: CharisSILW;
+  font-weight: bold;
+  font-style: italic;
+  src: url("../fonts/CharisSIL-5.000-web/CharisSIL-BI.subset.woff");
+}
+@font-face {
+  font-family: NotoSansW;
+  src: url("../fonts/NotoSans-web/NotoSans-Regular.subset.woff");
+}
+@font-face {
+  font-family: NotoSansW;
+  font-style: italic;
+  src: url("../fonts/NotoSans-web/NotoSans-Italic.subset.woff");
+}
+@font-face {
+  font-family: NotoSansW;
+  font-weight: bold;
+  src: url("../fonts/NotoSans-web/NotoSans-Black.subset.woff");
+}
+@font-face {
+  font-family: NotoSansW;
+  font-style: italic;
+  font-weight: bold;
+  src: url("../fonts/NotoSans-web/NotoSans-BlackItalic.subset.woff");
+}
