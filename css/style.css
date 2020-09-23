@@ -506,13 +506,41 @@ article .container .row p {
   margin: 0px;
   margin-top: 0.8em;
 }
+article .container .row .example {
+  overflow: hidden;
+  font-size: 0.95em;
+  border-left-style: solid;
+  border-left-color: #801b13;
+  border-left-width: 0.4em;
+  background-color: #e2d1bc;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+article .container .row .example .inset-math-right,
+article .container .row .example .inset-math-left {
+  font-size: 1.05em;
+}
 article .container .row .inset-math-right {
   float: right;
   margin-left: 2em;
+  font-size: 1em;
 }
 article .container .row .inset-math-left {
   float: left;
   margin-right: 2em;
+}
+article .container .row .tek {
+  float: right;
+  font-style: italic;
+}
+article .container .row ol {
+  white-space: pre-line;
+}
+article .container .row .footnotes ol {
+  white-space: normal;
 }
 article .container .row img {
   max-width: 100% !important;
